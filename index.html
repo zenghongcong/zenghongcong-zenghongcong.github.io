@@ -5,9 +5,10 @@
 		<title>github个人主页</title>
 	</head>
 	<body>
+		<time class="time"></time>
 		<script>
 			var time = Date.parse(new Date()) - Date.parse('2017-3-4 00:00:00')
-			document.body.innerHTML = Math.ceil(time/(3600*24*1000))
+			document.querySelector('.time').innerHTML = Math.ceil(time/(3600*24*1000)) + '天'
 		</script>
 	</body>
 </html>
