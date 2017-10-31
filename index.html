@@ -2,13 +2,204 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>github个人主页</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+		<title>个人主页</title>
+		<link rel="stylesheet" href="css/font.css"/>
+		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body>
-		<time class="time"></time>
+		<audio id="audio" src=""></audio>
+		<div class="mask-bg" style="background-image: url(http://oiq8j9er1.bkt.clouddn.com/music_%E6%88%91%E8%BF%98%E6%83%B3%E5%A5%B9.jpg);"></div>
+		<header>
+			<p class="name"></p>
+			<p class="singer"></p>
+		</header>
+		<div class="content">
+			<div class="cd">
+				<div class="line">
+					<div class="triger pause"></div>
+				</div>
+				<div class="cover animate pause">
+					<div class="cd-bg"></div>
+					<img src="http://p1.music.126.net/_Nzg2JzIjaBy38rSSdfFig==/851021999952100.jpg"/>
+				</div>
+			</div>
+			<div class="souvenir">
+				<p>一切都来得刚刚好</p>
+				<p class="time"></p>
+			</div>
+		</div>
+		<footer>
+			<div class="range-wrap">
+				<div class="range">
+					<span class="already">00:00</span>
+					<div class="duration">
+						<span class="currentProgress"></span>
+						<span class="ball"></span>
+					</div>
+					<span class="total"></span>
+				</div>
+			</div>
+			<div class="musicCtrl">
+				<i class="btn-pattern playType icon-music-shunxu"></i>
+				<i class="btn-prev prev icon-prevdetail"></i>
+				<i class="btn-play playPause icon-playdetail"></i>
+				<i class="btn-next next icon-nextdetail"></i>
+				<i class="btn-menu menu icon-list-music"></i>
+			</div>
+		</footer>
 		<script>
-			var time = Date.parse(new Date()) - Date.parse('2017-3-4 00:00:00')
-			document.querySelector('.time').innerHTML = Math.ceil(time/(3600*24*1000)) + '天'
+			
+			var songList = [
+				{
+					"name": "The Right Path",
+					"singer": "Thomas Greenberg",
+					"url":"data/Thomas Greenberg - The Right Path.mp3",
+					"img": "http://p1.music.126.net/_Nzg2JzIjaBy38rSSdfFig==/851021999952100.jpg?param=300y300"
+				},
+				{
+					"name": "刚好遇见你",
+					"singer": "李玉刚",
+					"url":"data/李玉刚 - 刚好遇见你.mp3",
+					"img": "http://p1.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg?param=300y300"
+				}
+			],
+			playPattern = 1, //1：顺序播放  2：列表循环  3：单曲循环  4：随机播放
+			index = 0,
+			audio = null,
+			btnPlay = null,
+			btnNext = null,
+			btnPrev = null,
+			songName = null,
+			singer = null,
+			time = null,
+			cover = null,
+			triger = null,
+			already = null,
+			ball = null,
+			currentProgress = null,
+			currentTime = 0,
+			totalTime = 0;
+		
+			window.onload = function(){
+				audio = document.querySelector('#audio');
+				btnPlay = document.querySelector('.btn-play');
+				songName = document.querySelector('.name');
+				singer = document.querySelector('.singer');
+				time = document.querySelector('.time');
+				btnNext = document.querySelector('.btn-next');
+				btnPrev = document.querySelector('.btn-prev');
+				cover = document.querySelector('.cover'),
+				triger = document.querySelector('.triger'),
+				already = document.querySelector('.already'),
+				ball = document.querySelector('.ball'),
+				currentProgress = document.querySelector('.currentProgress');
+				setRem();
+				setTime();
+				init();
+				btnPlay.onclick = function(){
+					togglePlay();
+				}
+				btnNext.onclick = function(){
+					switchSong(1);
+				}
+				btnPrev.onclick = function(){
+					switchSong(2);
+				}
+				audio.oncanplay = function(){
+					var duration = Math.floor(audio.duration),
+						m = Math.floor(duration/60),
+						s = duration%60;
+					totalTime = duration;
+					currentTime = 0;
+					currentProgress.style.width = 0;
+					currentProgress.style.left = '-7px';
+					document.querySelector('.total').innerText = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+				}
+				audio.addEventListener('ended', function () {  
+				    switchSong(1);
+				}, false)
+				audio.addEventListener('timeupdate', function () {
+					if(audio.paused){
+						return;
+					}
+					var time = Math.floor(audio.currentTime),
+						m = Math.floor(time/60),
+						s = time%60;
+					currentProgress.style.width = (time/totalTime)*100 + '%';
+					ball.style.left = (time/totalTime)*100 + '%';
+					if(currentTime == time){
+						return;
+					}
+					currentTime = time;
+					already.innerText = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+				}, false)
+			}
+			
+			function togglePlay(){
+				if(audio.paused){
+					audio.play();
+					btnPlay.classList.remove('icon-playdetail');
+					btnPlay.classList.add('icon-pause-detail');
+					cover.classList.remove('pause');
+					triger.classList.remove('pause');
+				}else{
+					audio.pause();
+					btnPlay.classList.remove('icon-pause-detail');
+					btnPlay.classList.add('icon-playdetail');
+					cover.classList.add('pause');
+					triger.classList.add('pause');
+				}
+			}
+			
+			function switchSong(type){
+				var total = songList.length;
+				if(type == 1){
+					if(index == total - 1){
+						index = 0;
+					}else{
+						index += 1;
+					}
+				}else{
+					if(index == 0){
+						index = total - 1;
+					}else{
+						index -= 1;
+					}
+				}
+				init();
+				togglePlay();
+			}
+			
+			function init(){
+				var song = songList[index];
+				audio.src = song.url;
+				songName.innerText = song.name;
+				singer.innerText = song.singer;
+			}
+			
+			function setRem() {
+				var docEl = document.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) {
+							return;
+						}
+						docEl.style.fontSize = 100 * (clientWidth / 1080) + 'px';
+					};
+				if(!document.addEventListener) {
+					return;
+				}
+				recalc();
+				window.addEventListener(resizeEvt, recalc, false);
+			}
+			
+			function setTime(){
+				var date = Date.parse(new Date()) - Date.parse('Mar 04, 2017');
+				time.innerHTML = '我们在一起已经' + Math.ceil(date/(3600*24*1000)) + '天啦~';
+			}
 		</script>
 	</body>
 </html>

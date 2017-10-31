@@ -1,0 +1,47 @@
+/*重设浏览器样式*/
+*{ box-sizing: border-box; -webkit-box-sizing: border-box; }
+a, body, div,
+header, html, img,
+p, span, ul{ border: none; margin: 0;padding: 0; border: 0;outline:0; -webkit-text-size-adjust: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+html, body{ line-height: 1; height: 100%; font-family: "microsoft yahei"; background: #aaa; }
+			
+.mask-bg{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover !important; background-position: center center !important; -webkit-filter: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…vbj0iMTAiIC8+DQogICAgICAgIDwvZmlsdGVyPg0KICAgIDwvZGVmcz4NCjwvc3ZnPg==#blur); filter: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…vbj0iMTAiIC8+DQogICAgICAgIDwvZmlsdGVyPg0KICAgIDwvZGVmcz4NCjwvc3ZnPg==#blur); -webkit-filter: blur(30px); filter: blur(30px); }
+			
+header{ position: absolute; top: 0; left: 0; height: 10vh; padding: 1vh 50px 0 50px; }
+header .name, header .singer{ margin: 0; color: #fff; font-size: 14px; padding: 4px 0; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+
+.content{ position: absolute; top: 10vh; left: 0; bottom: 20vh; right: 0; overflow: hidden; }
+.content .cd .line{ width: 80%; height: 1px; background-image: linear-gradient(270deg,hsla(0,0%,100%,0),hsla(0,0%,100%,.6),hsla(0,0%,100%,0)); margin: 0 auto; }
+.content .cd .line .triger{ position: absolute; top: -14px; left: 50%; -webkit-transform: translate3d(-16px,0,0); transform: translate3d(-16px,0,0); width: 90px; height: 140px; background-image: url(../images/swith.png); background-size: cover; -webkit-transform-origin: 14px 16px; transform-origin: 14px 16px; transition: all .3s; z-index: 5; }
+.content .cd .line .triger.pause{ -webkit-transform: translate3d(-16px,0,0) rotate(-30deg); transform: translate3d(-16px,0,0) rotate(-30deg); }
+.content .cd .cover{ width: 44vh; height: 44vh; position: relative; margin: 0 auto; margin-top: 70px; }
+.content .cd .cover.pause{ animation-play-state: paused !important; -webkit-animation-play-state: paused !important; }
+.content .cd .cover.animate{ -webkit-animation: goRotate 16s linear infinite .1s; animation: goRotate 16s linear infinite .1s; }
+.content .cd .cover .cd-bg{ width: 44vh; height: 44vh; position: absolute; top: 0; left: 50%; -webkit-transform: translate3d(-50%,0,0); transform: translate3d(-50%,0,0); background: url(../images/cd-mine.png); background-size: 100%; z-index: 2; }
+.content .cd .cover img{ position: absolute; display: block; width: 28vh; height: 28vh; top: 8vh; transition: all .3s; left: 50%; -webkit-transform: translate3d(-50%,0,0); transform: translate3d(-50%,0,0); z-index: 1; }
+.content .souvenir{ margin-top: 1.5vh; font-size: 16px; color: #fff; text-align: center; }
+.content .souvenir p{ padding: 4px 0; }
+
+footer{ position: absolute; bottom: 0; left: 0; right: 0; height: 18vh; color: #fff; background-image: linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.4),transparent,transparent); }
+footer .range-wrap{ height: 6vh; }
+footer .range-wrap .range{ display: -webkit-box; -webkit-box-align: center; align-items: center; display: flex; width: 90%; height: 100%; margin: 0 auto; padding: 0 10px; }
+footer .range-wrap .range .already{ font-size: 12px; color: hsla(0,0%,100%,.8); margin-right: 10px; }
+footer .range-wrap .range .total{ font-size: 12px; color: hsla(0,0%,100%,.8); margin-left: 10px; }
+footer .range-wrap .range .duration{ -webkit-box-flex: 1; flex: 1; height: 2px; border-radius: 1px; background: hsla(0,0%,96%,.3); margin: 0 auto; font-size: 0; cursor: pointer; position: relative; }
+footer .range-wrap .range .duration .currentProgress{ display: inline-block; width: 0; height: 2px; float: left; background: #c62f2f; }
+footer .range-wrap .range .duration .ball{ position: absolute; left: 0; width: 16px; height: 16px; margin-left: -7px; margin-top: -7px; background: #fff; border-radius: 50%; cursor: pointer; }
+
+footer .musicCtrl{ height: 12vh; width: 100%; display: flex; align-items: center; justify-content: center; font-size: 0 }
+footer .musicCtrl i{ display: inline-block; font-size: 28px; width: 20vw; height: 50px; line-height: 50px; text-align: center; }
+footer .musicCtrl i.playPause{ font-size: 46px; }
+footer .musicCtrl i.playType, footer .musicCtrl i.menu{ font-size: 20px; color: #e1e1e1; }
+
+@keyframes goRotate{
+	from{
+		transform: rotate(0)
+	}
+	to{
+		transform: rotate(360deg)
+	}
+}
+
