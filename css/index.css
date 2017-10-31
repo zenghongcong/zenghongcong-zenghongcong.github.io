@@ -36,6 +36,38 @@ footer .musicCtrl i{ display: inline-block; font-size: 28px; width: 20vw; height
 footer .musicCtrl i.playPause{ font-size: 46px; }
 footer .musicCtrl i.playType, footer .musicCtrl i.menu{ font-size: 20px; color: #e1e1e1; }
 
+/*加载动画*/
+.loading{ position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; }
+.loading .box{ position: absolute; top: -2rem; left: 0; bottom: 0; right: 0; width: 100px; height: 100px; margin: auto; border-radius: 6px; -webkit-border-radius: 6px; background: rgba(0,0,0,.6); }
+.loading .box .line{ position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 36px; height: 36px; margin: auto; }
+.loading .box .line div{ position: absolute; left: 16px; top: 0; width: 2px; height: 36px; }
+.loading .box .line div:before,.loading .box .line div:after{position:absolute;content:'';display:block;width:2px;height:25%;background:#fcfcfc;border-radius:5px;}
+.loading .box .line div:before{ top: 0; }
+.loading .box .line div:after{ bottom: 0; }
+.loading .box .line div:nth-child(2){-webkit-transform:rotate(30deg);}
+.loading .box .line div:nth-child(3){-webkit-transform:rotate(60deg);}
+.loading .box .line div:nth-child(4){-webkit-transform:rotate(90deg);}
+.loading .box .line div:nth-child(5){-webkit-transform:rotate(120deg);}
+.loading .box .line div:nth-child(6){-webkit-transform:rotate(150deg);}
+
+.loading .box .line div:nth-child(1):before{-webkit-animation:load 1.2s linear 0s infinite;}
+.loading .box .line div:nth-child(2):before{-webkit-animation:load 1.2s linear 0.1s infinite;}
+.loading .box .line div:nth-child(3):before{-webkit-animation:load 1.2s linear 0.2s infinite;}
+.loading .box .line div:nth-child(4):before{-webkit-animation:load 1.2s linear 0.3s infinite;}
+.loading .box .line div:nth-child(5):before{-webkit-animation:load 1.2s linear 0.4s infinite;}
+.loading .box .line div:nth-child(6):before{-webkit-animation:load 1.2s linear 0.5s infinite;}
+.loading .box .line div:nth-child(1):after{-webkit-animation:load 1.2s linear 0.6s infinite;}
+.loading .box .line div:nth-child(2):after{-webkit-animation:load 1.2s linear 0.7s infinite;}
+.loading .box .line div:nth-child(3):after{-webkit-animation:load 1.2s linear 0.8s infinite;}
+.loading .box .line div:nth-child(4):after{-webkit-animation:load 1.2s linear 0.9s infinite;}
+.loading .box .line div:nth-child(5):after{-webkit-animation:load 1.2s linear 1s infinite;}
+.loading .box .line div:nth-child(6):after{-webkit-animation:load 1.2s linear 1.1s infinite;}
+
+@-webkit-keyframes load{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
 @keyframes goRotate{
 	from{
 		transform: rotate(0)
