@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body>
-		<audio id="audio" src=""></audio>
+		<audio id="audio" preload="auto" src=""></audio>
 		<div class="mask-bg" style="background-image: url(http://oiq8j9er1.bkt.clouddn.com/music_%E6%88%91%E8%BF%98%E6%83%B3%E5%A5%B9.jpg);"></div>
 		<header>
 			<p class="name"></p>
@@ -20,9 +20,11 @@
 				<div class="line">
 					<div class="triger pause"></div>
 				</div>
-				<div class="cover animate pause">
-					<div class="cd-bg"></div>
-					<img src="http://p1.music.126.net/_Nzg2JzIjaBy38rSSdfFig==/851021999952100.jpg"/>
+				<div class="cover-wrap">
+					<div class="cover">
+						<div class="cd-bg"></div>
+						<img class="cover-img" src=""/>
+					</div>
 				</div>
 			</div>
 			<div class="souvenir">
@@ -38,7 +40,7 @@
 						<span class="currentProgress"></span>
 						<span class="ball"></span>
 					</div>
-					<span class="total"></span>
+					<span class="total">00:00</span>
 				</div>
 			</div>
 			<div class="musicCtrl">
@@ -94,6 +96,8 @@
 			ball = null,
 			currentProgress = null,
 			loading = null,
+			coverWrap = null,
+			coverImg = null,
 			currentTime = 0,
 			totalTime = 0;
 		
@@ -110,7 +114,9 @@
 				already = document.querySelector('.already'),
 				ball = document.querySelector('.ball'),
 				currentProgress = document.querySelector('.currentProgress'),
-				loading = document.querySelector('.loading');
+				loading = document.querySelector('.loading'),
+				coverWrap = document.querySelector('.cover-wrap'),
+				coverImg = document.querySelector('.cover-img');
 				setRem();
 				setTime();
 				init();
@@ -124,7 +130,7 @@
 				btnPrev.onclick = function(){
 					switchSong(2);
 				}
-				audio.oncanplay = function(){
+				audio.addEventListener('canplay', function () { 
 					var duration = Math.floor(audio.duration),
 						m = Math.floor(duration/60),
 						s = duration%60;
@@ -133,7 +139,7 @@
 					currentProgress.style.width = 0;
 					currentProgress.style.left = '-7px';
 					document.querySelector('.total').innerText = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
-				}
+				}, false)
 				audio.addEventListener('ended', function () {  
 				    switchSong(1);
 				}, false)
@@ -159,15 +165,22 @@
 					audio.play();
 					btnPlay.classList.remove('icon-playdetail');
 					btnPlay.classList.add('icon-pause-detail');
-					cover.classList.remove('pause');
+					cover.classList.add('animate');
 					triger.classList.remove('pause');
 				}else{
 					audio.pause();
+					setTransForm();
 					btnPlay.classList.remove('icon-pause-detail');
 					btnPlay.classList.add('icon-playdetail');
-					cover.classList.add('pause');
+					cover.classList.remove('animate');
 					triger.classList.add('pause');
 				}
+			}
+			
+			function setTransForm(){
+				var coverTrans = getComputedStyle(cover).transform,
+					coverWrapTrans = getComputedStyle(coverWrap).transform;
+				coverWrap.style.transform = coverWrapTrans === 'none' ? coverTrans : coverTrans.concat('', coverWrapTrans);
 			}
 			
 			function switchSong(type){
@@ -192,8 +205,11 @@
 			function init(){
 				var song = songList[index];
 				audio.src = song.url;
+				audio.load();
 				songName.innerText = song.name;
 				singer.innerText = song.singer;
+				coverImg.src = song.img;
+				togglePlay();
 			}
 			
 			function setRem() {
@@ -216,6 +232,7 @@
 			function setTime(){
 				var date = Date.parse(new Date()) - Date.parse('Mar 04, 2017');
 				time.innerHTML = '我们在一起已经' + Math.ceil(date/(3600*24*1000)) + '天啦~';
+//				time.innerHTML = Math.ceil(date/(3600*24*1000));
 			}
 		</script>
 	</body>

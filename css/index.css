@@ -15,8 +15,19 @@ header .name, header .singer{ margin: 0; color: #fff; font-size: 14px; padding: 
 .content .cd .line .triger{ position: absolute; top: -14px; left: 50%; -webkit-transform: translate3d(-16px,0,0); transform: translate3d(-16px,0,0); width: 90px; height: 140px; background-image: url(../images/swith.png); background-size: cover; -webkit-transform-origin: 14px 16px; transform-origin: 14px 16px; transition: all .3s; z-index: 5; }
 .content .cd .line .triger.pause{ -webkit-transform: translate3d(-16px,0,0) rotate(-30deg); transform: translate3d(-16px,0,0) rotate(-30deg); }
 .content .cd .cover{ width: 44vh; height: 44vh; position: relative; margin: 0 auto; margin-top: 70px; }
-.content .cd .cover.pause{ animation-play-state: paused !important; -webkit-animation-play-state: paused !important; }
-.content .cd .cover.animate{ -webkit-animation: goRotate 16s linear infinite .1s; animation: goRotate 16s linear infinite .1s; }
+.content .cd .cover.pause{ -webkit-animation-play-state: paused; animation-play-state: paused; }
+.content .cd .cover.animate{
+	-webkit-animation-name: goRotate;
+	-webkit-animation-duration: 16s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-delay: .1s;
+	animation-name: goRotate;
+	animation-duration: 16s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-delay: .1s;
+}
 .content .cd .cover .cd-bg{ width: 44vh; height: 44vh; position: absolute; top: 0; left: 50%; -webkit-transform: translate3d(-50%,0,0); transform: translate3d(-50%,0,0); background: url(../images/cd-mine.png); background-size: 100%; z-index: 2; }
 .content .cd .cover img{ position: absolute; display: block; width: 28vh; height: 28vh; top: 8vh; transition: all .3s; left: 50%; -webkit-transform: translate3d(-50%,0,0); transform: translate3d(-50%,0,0); z-index: 1; }
 .content .souvenir{ margin-top: 1.5vh; font-size: 16px; color: #fff; text-align: center; }
@@ -37,7 +48,7 @@ footer .musicCtrl i.playPause{ font-size: 46px; }
 footer .musicCtrl i.playType, footer .musicCtrl i.menu{ font-size: 20px; color: #e1e1e1; }
 
 /*加载动画*/
-.loading{ position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; }
+.loading{ position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: #fff; }
 .loading .box{ position: absolute; top: -2rem; left: 0; bottom: 0; right: 0; width: 100px; height: 100px; margin: auto; border-radius: 6px; -webkit-border-radius: 6px; background: rgba(0,0,0,.6); }
 .loading .box .line{ position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 36px; height: 36px; margin: auto; }
 .loading .box .line div{ position: absolute; left: 16px; top: 0; width: 2px; height: 36px; }
