@@ -47,6 +47,35 @@ footer .musicCtrl i{ display: inline-block; font-size: 28px; width: 20vw; height
 footer .musicCtrl i.playPause{ font-size: 46px; }
 footer .musicCtrl i.playType, footer .musicCtrl i.menu{ font-size: 20px; color: #e1e1e1; }
 
+.music-list{  }
+.music-list .list-content{ position: fixed; height: 314px; background: #fff; bottom: 0; left: 0; right: 0; z-index: 23; }
+.music-list .list-content .title{ width: 100%; position: relative; height: 50px; font-size: 0; }
+.music-list .list-content .title .play-type{ display: inline-block; width: auto; height: 100%; line-height: 50px; padding: 0 15px; }
+.music-list .list-content .title .play-type i{ color: #666; font-size: 18px; display: inline-block; width: 20px; height: 20px; vertical-align: middle; }
+.music-list .list-content .title .play-type span{ color: #666; vertical-align: middle; font-size: 14px; font-weight: 300; }
+.music-list .list-content .title .border-1px{ position: relative; }
+.music-list .list-content .title .border-1px:after{ display: block; position: absolute; left: 0; bottom: 0; width: 100%; border-top: 1px solid rgba(7,17,27,.1); content: " "; -webkit-transform: scaleY(.5); transform: scaleY(.5); }
+.music-list .list-content .container{ height: calc(100% - 50px); margin: 0; padding: 0; overflow: scroll; -webkit-overflow-scrolling: touch; padding: 6px 0; }
+.music-list .list-content .container li{ margin: 0; padding: 0; list-style: none; height: 42px; line-height: 42px; padding: 0 15px; font-weight: 400; font-size: 14px; color: #666; overflow: hidden; }
+.music-list .list-content .container li .playingicon{ display: none; font-size: 14px; vertical-align: middle; color: #c62f2f; }
+.music-list .list-content .container li.active .playingicon{ display: inline-block; }
+.music-list .list-content .container li .border-1px{ position: relative; }
+.music-list .list-content .container li .border-1px:after{ display: block; position: absolute; left: 0; bottom: 0; width: 100%; border-top: 1px solid rgba(7,17,27,.1); content: " "; }
+.music-list .mask{ position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 21; background: rgba(0,0,0,.5); }
+
+.mask.fade-enter-to,.mask.fade-leave-to{
+	transition: all 0.3s;
+}
+.mask.fade-enter,.mask.fade-leave-to{
+	opacity: 0;
+}
+.music-list .list-content.sideUp-enter-to,.music-list .list-content.sideUp-leave-to{
+	transition: transform 0.3s;
+}
+.music-list .list-content.sideUp-enter,.music-list .list-content.sideUp-leave-to{
+	transform: translate3d(0,100%,0);
+}
+
 /*加载动画*/
 .loading{ position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: #fff; }
 .loading .box{ position: absolute; top: -2rem; left: 0; bottom: 0; right: 0; width: 100px; height: 100px; margin: auto; border-radius: 6px; -webkit-border-radius: 6px; background: rgba(0,0,0,.6); }
