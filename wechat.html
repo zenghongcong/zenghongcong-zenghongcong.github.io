@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>账单详情</title>
+		<link rel="stylesheet" href="./assets/reset.css?v=1.0.0" />
+		<link rel="stylesheet" href="./assets/base.css?v=1.0.0" />
+		<style type="text/css">
+			body {
+				background: #f8f8f8;
+				padding-bottom: 1rem;
+				font-family: "PingFang SC", Helvetica, "Helvetica Neue", Arial, "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+			}
+			
+			.base {
+				background: #fff;
+				padding: .5rem 0 .6rem;
+				margin-bottom: .14rem;
+			}
+			
+			.base .avatar {
+				width: 1rem;
+				height: 1rem;
+				margin: 0 auto;
+				background-image: url(./assets/avatar.jpg);
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				border-radius: 50%;
+			}
+			
+			.base .name {
+				text-align: center;
+				margin-top: .36rem;
+				font-size: .32rem;
+				color: #000;
+			}
+			
+			.base .price {
+				text-align: center;
+				margin-top: .36rem;
+				font-size: .6rem;
+				color: #000;
+				font-weight: bold;
+			}
+			
+			.base ul {
+				overflow: hidden;
+				width: 6.3rem;
+				margin: .92rem auto 0;
+				padding: .1rem 0;
+			}
+			
+			.base ul li {
+				margin-top: 0.49rem;
+				font-size: .28rem;
+				color: #353535;
+			}
+			
+			.base ul li span:first-child {
+				width: 1.6rem;
+				color: #888888;
+			}
+			
+			.base .bar-code {
+				overflow: hidden;
+				margin-top: 0.48rem;
+			}
+			
+			.base .bar-code img {
+				max-width: 95%;
+				max-height: 1.1rem;
+				margin: 0 auto;
+			}
+			
+			.base .bar-code p {
+				margin: 0.02rem 0 0.28rem;
+				text-align: center;
+				letter-spacing: 2px;
+				font-size: .24rem;
+				color: #000;
+			}
+			
+			.after-sale {
+				padding: 0 0.45rem;
+				margin-bottom: 1.2rem;
+				background: #fff;
+			}
+			
+			.after-sale.border-row:before {
+				top: initial;
+				bottom: 0;
+			}
+			
+			.after-sale li {
+				position: relative;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				padding: 0 0.15rem;
+				justify-content: space-between;
+				width: 6.6rem;
+				margin: 0 auto;
+				font-size: 0.26rem;
+				color: #353535;
+			}
+			
+			.after-sale li:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: 0.48rem;
+				height: 0.48rem;
+				margin: auto;
+				background: url(./assets/arrow3.png) no-repeat;
+				background-size: 100% 100%;
+				transform: rotate(-90deg);
+			}
+			
+			.after-sale li span:last-child {
+				margin-right: .3rem;
+				color: #c3c3c3;
+			}
+			
+			.flex {
+				display: flex;
+			}
+			
+			.border-row {
+				position: relative;
+			}
+			
+			.border-row:before {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				content: '';
+				display: block;
+				width: 100%;
+				height: 1px;
+				margin: auto;
+				transform: scaleY(0.5);
+				background: #e5e5e5;
+			}
+			
+			.footer {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				z-index: 9;
+				width: 100%;
+				height: 1rem;
+				background: #fafafb;
+			}
+			
+			.footer span {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				display: block;
+				width: .42rem;
+				height: .42rem;
+				margin: auto;
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+			}
+			
+			.footer span:first-child {
+				top: 0.06rem;
+				left: 2.5rem;
+				background-image: url(./assets/footer-arrow1.png);
+				transform: rotate(90deg);
+			}
+			
+			.footer span:last-child {
+				right: 2.5rem;
+				background-image: url(./assets/footer-arrow2.png);
+				transform: rotate(-90deg);
+			}
+			
+			#btn-edit {
+				opacity: 0;
+				position: fixed;
+				top: 0;
+				right: 0;
+				z-index: 10;
+				width: 2rem;
+				height: 1rem;
+				line-height: 1rem;
+				text-align: center;
+				color: #fff;
+				background-color: #04be02;
+				border-radius: .1rem;
+				box-shadow: 0 0 0.2rem rgba(0, 0, 0, .4);
+			}
+			
+			.popup {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 99;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.popup .mask {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .7);
+			}
+			
+			.popup .inner {
+				position: absolute;
+				z-index: 13;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				width: 90%;
+				height: 11rem;
+				padding: .4rem .2rem;
+				margin: auto;
+				background: #fff;
+				border-radius: .2rem;
+			}
+			
+			.popup .inner li {
+				margin-bottom: .2rem;
+			}
+			
+			.popup .inner li span {
+				display: block;
+				width: 1.5rem;
+				height: .6rem;
+				line-height: .6rem;
+			}
+			
+			.popup .inner li input {
+				width: 4.8rem;
+				height: .6rem;
+				padding: 0 .1rem;
+				border: 1px solid #ebebeb;
+				margin: 0;
+			}
+			
+			.popup .inner #btn-save {
+				display: block;
+				width: 80%;
+				height: .8rem;
+				margin: .5rem auto 0;
+				line-height: .8rem;
+				text-align: center;
+				color: #fff;
+				background-color: #04be02;
+				border-radius: .05rem;
+			}
+		</style>
+		<script>
+			(function(doc, win) {
+
+				//      用原生方法获取用户设置的浏览器的字体大小(兼容ie)
+				if(doc.documentElement.currentStyle) {
+					var user_webset_font = doc.documentElement.currentStyle['fontSize'];
+				} else {
+					var user_webset_font = getComputedStyle(doc.documentElement, false)['fontSize'];
+				}
+
+				//      取整后与默认16px的比例系数
+				var xs = parseFloat(user_webset_font) / 16;
+				//      设置rem的js设置的字体大小
+				var view_jsset_font, result_font;
+
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					clientWidth,
+					recalc = function() {
+						clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						if(!doc.addEventListener) return;
+						if(clientWidth < 750) {
+							//              设置rem的js设置的字体大小
+							view_jsset_font = 100 * (clientWidth / 750);
+							//              最终的字体大小为rem字体/系数
+							result_font = view_jsset_font / xs;
+							//              设置根字体大小
+							docEl.style.fontSize = result_font + 'px';
+						} else {
+							docEl.style.fontSize = 100 + 'px';
+						}
+					};
+
+				win.addEventListener(resizeEvt, recalc, false);
+				recalc();
+
+			})(document, window);
+		</script>
+	</head>
+
+	<body>
+		<a id="btn-edit" href="javascript:;">编辑</a>
+		<div class="base">
+			<div id="r0" class="avatar"></div>
+			<p id="r1" class="name">72街</p>
+			<p id="r2" class="price">-2.04</p>
+			<ul class="border-row">
+				<li class="flex">
+					<span>当前状态</span>
+					<span id="r3">付款成功</span>
+				</li>
+				<li class="flex">
+					<span>商品</span>
+					<span id="r4">餐饮消费(会员折扣￥0.16)</span>
+				</li>
+				<li class="flex">
+					<span>商户全称</span>
+					<span id="r5">广州XXXXXXXXXX</span>
+				</li>
+				<li class="flex">
+					<span>支付时间</span>
+					<span id="r6">2018-11-08 12:18:46</span>
+				</li>
+				<li class="flex">
+					<span>支付方式</span>
+					<span id="r7">招商银行(5002)</span>
+				</li>
+				<li class="flex">
+					<span>交易单号</span>
+					<span id="r8">4000002182738917923881723091</span>
+				</li>
+				<li class="flex">
+					<span>商户单号</span>
+					<span id="r9">可在支持的商户扫码退款</span>
+				</li>
+			</ul>
+			<div class="bar-code">
+				<img id="barcode" />
+				<p id="r10">kdc72j976E540E5D8111081218449312</p>
+			</div>
+		</div>
+		<ul class="after-sale border-row">
+			<li class="flex">
+				<span>在此商户的交易账单</span>
+				<span></span>
+			</li>
+			<li class="flex border-row">
+				<span>联系商户</span>
+				<span></span>
+			</li>
+			<li class="flex border-row">
+				<span>评价</span>
+				<span>未评价</span>
+			</li>
+			<li class="flex border-row">
+				<span>对订单有疑惑</span>
+				<span></span>
+			</li>
+		</ul>
+		<div class="footer border-row flex">
+			<span></span>
+			<span></span>
+		</div>
+
+		<div class="popup">
+			<div class="mask"></div>
+			<div class="inner">
+				<ul>
+					<li class="flex">
+						<span>商铺图标：</span>
+						<input id="v0" type="text" placeholder="填图标链接" />
+					</li>
+					<li class="flex">
+						<span>商铺名称：</span>
+						<input id="v1" type="text" />
+					</li>
+					<li class="flex">
+						<span>付款金额：</span>
+						<input id="v2" type="number" />
+					</li>
+					<li class="flex">
+						<span>当前状态：</span>
+						<input id="v3" type="text" value="支付成功" />
+					</li>
+					<li class="flex">
+						<span>商品：</span>
+						<input id="v4" type="text" />
+					</li>
+					<li class="flex">
+						<span>商户全称：</span>
+						<input id="v5" type="text" />
+					</li>
+					<li class="flex">
+						<span>支付时间：</span>
+						<input id="v6" type="text" />
+					</li>
+					<li class="flex">
+						<span>支付方式：</span>
+						<input id="v7" type="text" />
+					</li>
+					<li class="flex">
+						<span>交易单号：</span>
+						<input id="v8" type="text" />
+					</li>
+					<li class="flex">
+						<span>商户单号：</span>
+						<input id="v9" type="text" />
+					</li>
+					<li class="flex">
+						<span>条形码：</span>
+						<input id="v10" type="text" placeholder="是否显示条形码（不显示不填,显示随便输入几个字符）" />
+					</li>
+				</ul>
+				<a id="btn-save" href="javascript:;">保存</a>
+			</div>
+		</div>
+
+	</body>
+	<script src="./assets/JsBarcode.all.min.js"></script>
+	<script>
+		JsBarcode("#barcode", "kdc72j976E540E5D8111081218449312", {
+			width: 3,
+			height: 100,
+			displayValue: false
+		});
+
+		function $(elem) {
+			return document.querySelector(elem);
+		}
+
+		function save() {
+			var imgLink = $('#v0').value,
+				shopName = $('#v1').value,
+				price = $('#v2').value,
+				status = $('#v3').value,
+				goods = $('#v4').value,
+				shopNameAll = $('#v5').value,
+				payTime = $('#v6').value,
+				payWay = $('#v7').value,
+				payOrder = $('#v8').value,
+				shopOrder = $('#v9').value,
+				barCode = $('#v10').value;
+			
+			price = Number(price).toFixed(2);
+			
+			if(imgLink != ''){
+				$('#r0').style.backgroundImage = 'url('+ imgLink +')';
+			}
+			$('#r1').innerText = shopName;
+			$('#r2').innerText = price.indexOf('-') > -1 ? price : '-'+price;
+			$('#r3').innerText = status;
+			$('#r4').innerText = goods;
+			$('#r5').innerText = shopNameAll;
+			$('#r6').innerText = payTime;
+			$('#r7').innerText = payWay;
+			$('#r8').innerText = payOrder;
+			
+			if(barCode == ''){
+				$('.bar-code').classList.add('hide');
+				$('#r9').innerText = shopOrder;
+			}else{
+				$('.bar-code').classList.remove('hide');
+				$('#r9').innerText = '可在支持的商户扫码退款';
+				$('#r10').innerText = shopOrder;
+				JsBarcode("#barcode", shopOrder, {
+					width: 3,
+					height: 100,
+					displayValue: false
+				});
+			}
+		}
+
+		$('#btn-edit').addEventListener('click', function() {
+			$('.popup').classList.remove('hide');
+		});
+
+		$('#btn-save').addEventListener('click', function() {
+			save();
+			$('.popup').classList.add('hide');
+		});
+	</script>
+
+</html>
