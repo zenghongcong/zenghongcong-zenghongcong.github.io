@@ -432,29 +432,38 @@
 	</body>
 	<script src="./assets/JsBarcode.all.min.js"></script>
 	<script>
-		JsBarcode("#barcode", "kdc72j976E540E5D8111081218449312", {
-			width: 3,
-			height: 100,
-			displayValue: false
-		});
+		
+		var imgLink = localStorage.getItem('imgLink') || '',
+			shopName = localStorage.getItem('shopName') || '',
+			price = localStorage.getItem('price') || '-1200.00',
+			status = localStorage.getItem('status') || '支付成功',
+			goods = localStorage.getItem('goods') || '',
+			shopNameAll = localStorage.getItem('shopNameAll') || '',
+			payTime = localStorage.getItem('payTime') || '2018-12-19 18:24:45',
+			payWay = localStorage.getItem('payWay') || '招商银行(5002)',
+			payOrder = localStorage.getItem('payOrder') || '4200000227201812090632729011',
+			shopOrder = localStorage.getItem('shopOrder') || '20181209112244101417918612',
+			barCode = localStorage.getItem('barCode') || '';
+			
+		$('#v0').value = imgLink;
+		$('#v1').value = shopName;
+		$('#v2').value = price;
+		$('#v3').value = status;
+		$('#v4').value = goods;
+		$('#v5').value = shopNameAll;
+		$('#v6').value = payTime;
+		$('#v7').value = payWay;
+		$('#v8').value = payOrder;
+		$('#v9').value = shopOrder;
+		$('#v10').value = barCode;
+		
+		setValue();
 
 		function $(elem) {
 			return document.querySelector(elem);
 		}
-
-		function save() {
-			var imgLink = $('#v0').value,
-				shopName = $('#v1').value,
-				price = $('#v2').value,
-				status = $('#v3').value,
-				goods = $('#v4').value,
-				shopNameAll = $('#v5').value,
-				payTime = $('#v6').value,
-				payWay = $('#v7').value,
-				payOrder = $('#v8').value,
-				shopOrder = $('#v9').value,
-				barCode = $('#v10').value;
-			
+		
+		function setValue() {
 			price = Number(price).toFixed(2);
 			
 			if(imgLink != ''){
@@ -482,6 +491,34 @@
 					displayValue: false
 				});
 			}
+		}
+
+		function save() {
+			imgLink = $('#v0').value;
+			shopName = $('#v1').value;
+			price = $('#v2').value;
+			status = $('#v3').value;
+			goods = $('#v4').value;
+			shopNameAll = $('#v5').value;
+			payTime = $('#v6').value;
+			payWay = $('#v7').value;
+			payOrder = $('#v8').value;
+			shopOrder = $('#v9').value;
+			barCode = $('#v10').value;
+			
+			setValue();
+			
+			localStorage.setItem('imgLink', imgLink);
+			localStorage.setItem('shopName', shopName);
+			localStorage.setItem('price', price);
+			localStorage.setItem('status', status);
+			localStorage.setItem('goods', goods);
+			localStorage.setItem('shopNameAll', shopNameAll);
+			localStorage.setItem('payTime', payTime);
+			localStorage.setItem('payWay', payWay);
+			localStorage.setItem('payOrder', payOrder);
+			localStorage.setItem('shopOrder', shopOrder);
+			localStorage.setItem('barCode', barCode);
 		}
 
 		$('#btn-edit').addEventListener('click', function() {
