@@ -3,7 +3,7 @@
 a, body, div,
 header, html, img,
 p, span, ul{ border: none; margin: 0;padding: 0; border: 0;outline:0; -webkit-text-size-adjust: none; -webkit-tap-highlight-color: rgba(0,0,0,0); }
-html, body{ line-height: 1.5; height: 100%; font-family: "microsoft yahei"; background: #aaa; }
+html, body{ line-height: 1; height: 100%; font-family: "microsoft yahei"; background: #aaa; }
 			
 .mask-bg{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover !important; background-position: center center !important; -webkit-filter: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…vbj0iMTAiIC8+DQogICAgICAgIDwvZmlsdGVyPg0KICAgIDwvZGVmcz4NCjwvc3ZnPg==#blur); filter: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…vbj0iMTAiIC8+DQogICAgICAgIDwvZmlsdGVyPg0KICAgIDwvZGVmcz4NCjwvc3ZnPg==#blur); -webkit-filter: blur(30px); filter: blur(30px); }
 			
