@@ -19,16 +19,16 @@
             clientWidth = docEl.clientWidth;
             if(!clientWidth) return;
             if(!doc.addEventListener) return;
-            // if(clientWidth < 750) {
+            if(clientWidth < 750) {
                 //              设置rem的js设置的字体大小
                 view_jsset_font = 100 * (clientWidth / 750);
                 //              最终的字体大小为rem字体/系数
                 result_font = view_jsset_font / xs;
                 //              设置根字体大小
                 docEl.style.fontSize = result_font + 'px';
-            // } else {
-            //     docEl.style.fontSize = 100 + 'px';
-            // }
+            } else {
+                docEl.style.fontSize = 100 + 'px';
+            }
         };
 
     win.addEventListener(resizeEvt, recalc, false);
